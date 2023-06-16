@@ -1,6 +1,11 @@
 #!/usr/bin/bash
 
-# Automated System Update Installer
+#******************************************************
+#           Automated System Update Installer         *
+# Created By: BlackRanger07                           *
+# Date: June 14, 2023                                 *
+#******************************************************
+# 
 
 if [ ${EUID} -ne 0 ]; then
 	echo "You must be root to run this installer."
@@ -11,7 +16,7 @@ automationsetup () {
 
 FILEDIR="/etc/systemd/system"
 
-if [ ! -e ${FILEDIR}/Ubuntu-Packages-Update.service ]; then
+if [ ! -e ${FILEDIR}/Ubuntu-Packages-Update.service ] && [ ! -e ${FILEDIR}/Ubuntu-Packages-Update.timer ]; then
 	echo "Creating files Ubuntu-Packages-Update.service and Ubuntu-Packages-Update.timer in /etc/systemd/system"
 	sleep 2
 else
