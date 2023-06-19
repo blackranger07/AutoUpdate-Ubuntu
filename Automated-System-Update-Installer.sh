@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 #******************************************************
 #           Automated System Update Installer         *
@@ -11,6 +11,8 @@ if [ ${EUID} -ne 0 ]; then
 	echo "You must be root to run this installer."
 	exit 1
 fi
+
+clear
 
 automationsetup () {
 
