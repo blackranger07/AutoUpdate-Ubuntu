@@ -14,6 +14,20 @@ fi
 
 clear
 
+installcleanup () {
+
+UPDATESTAT=$(systemctl status Ubuntu-Packages-Update.timer | grep Active | cut -d  s -f  1 | cut -d : -f 2 | cut -d '(' -f 1)
+
+if [ ${UPDATESTAT} == "active" ]; then
+	echo "Removing Automated-System-Update-Installer.sh"
+	rm -v Automated-System-Update-Installer.sh
+	echo "Install completed!"
+else
+	echo "Install completed with error(s)."
+fi
+
+}
+
 automationsetup () {
 
 FILEDIR="/etc/systemd/system"
@@ -54,7 +68,7 @@ EOF
 
 if [ $? == 0 ]; then
 	#Modify permissions for root to have Full privileges.
-	chmod 764 ${FILEDIR}/Ubuntu-Packages-Update.*
+	chmod 664 ${FILEDIR}/Ubuntu-Packages-Update.*
 	if [ $? == 0 ]; then
 		echo "File permissions changed for Ubuntu-Packages-Update.service and Ubuntu-Packages-Update.timer"
 		echo "Enabling the timer."
@@ -68,7 +82,7 @@ if [ $? == 0 ]; then
 				echo "Verify start date on screen."
 				sleep 2
 				systemctl status Ubuntu-Packages-Update.timer
-				echo "Done!"
+				installcleanup
 			fi
 		fi
 	fi
